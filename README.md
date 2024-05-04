@@ -6,7 +6,7 @@
 
 1. **Install Dependencies**: Use `npm install` to install all dependencies.
 
-2. **Import the Collection**: Import the collection `./data/thunder_client/thunder-collection_Testing.json` into Thunder Client.
+2. **Import the Collection**: Import the collection `./data/thunder_client/thunder-collection_exercise1-api.json` into Thunder Client.
 
 3. **Start Server**: Use `npm start` to launch the Express server.
 

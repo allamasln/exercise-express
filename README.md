@@ -10,6 +10,8 @@
 
 3. Set up Postman requests in a folder named "User" within the collection to test registration and login functionalities.
 
+4. Implement validation for user registration inputs, ensuring that the username is not empty and doesn't already exist, and that the password meets security requirements.
+
 ```bash
 git checkout exercise8
 ```

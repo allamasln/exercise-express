@@ -1,15 +1,20 @@
 ## Express API
 
-### Add an authentication system jwt token-based
+### Authorization
 
 > IMPORTANT: 🚫 Do not modify imported request configurations without explicit instructions.
 
-1. Install Dependencies: Ensure all dependencies are installed.
+1. Create the following two protected routes for all authenticated users:
 
-2. Develop a jwt token-based user system. Make necessary adjustments in the data source file (data.js), controllers, and routers.
+- Implement a route for users to like or dislike a movie at `/movies/:id/like`
+- Implement another route and configure the endpoint for users to add or remove a movie from their favorites list.
 
-3. Set up Postman requests in a folder named "User" within the collection to test registration and login functionalities.
+(In both cases, ensure that a user cannot like a movie or mark it as a favorite on behalf of another user.)
+
+2. Update the GET requests for movies to also include a "likes" property in the response, containing the usernames of users who have liked the movie.
+
+3. Additionally, create a route at GET /api/users/:userId/movies/favorites to retrieve the favorite movies of the authenticated user.
 
 ```bash
-git checkout exercise8
+git checkout exercise9
 ```

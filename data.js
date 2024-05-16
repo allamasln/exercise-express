@@ -44,7 +44,10 @@ const genres = {
 	},
 }
 
+const users = {}
+
 module.exports = {
 	movies,
 	genres,
+	users,
 }

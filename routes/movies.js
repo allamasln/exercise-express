@@ -1,15 +1,20 @@
 const express = require('express')
+const validate = require('../middelware/validate.js');
+
 
 const router = express.Router()
 
 const { generateUniqueId } = require('../utils')
 const { movies } = require('../data')
 
-router.get('/', (req, res) => {
+router.get('/',
+(req, res) => {
 	res.json(Object.values(movies))
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id',validate.validateUUID("id"),validate.validate,
+
+(req, res) => {
 	const { id } = req.params
 	const movie = movies[id]
 
@@ -20,7 +25,9 @@ router.get('/:id', (req, res) => {
 	res.json(movie)
 })
 
-router.post('/', (req, res) => {
+router.post('/', validate.validarBody("title"),validate.validate,
+
+(req, res) => {
 	const newMovieId = generateUniqueId()
 	const { title, year, genreId, director } = req.body
 	const newMovie = { id: newMovieId, title, year, genreId, director }
@@ -30,7 +37,10 @@ router.post('/', (req, res) => {
 	res.status(201).json(newMovie)
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validate.validarBody("title"),
+validate.validateUUID("id"),validate.validate,
+
+(req, res) => {
 	const { id } = req.params
 	const updatedMovieData = req.body
 	const movie = movies[id]
@@ -43,7 +53,10 @@ router.put('/:id', (req, res) => {
 	res.json(movies[id])
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id',validate.validt,
+
+
+(req, res) => {
 	const { id } = req.params
 	const movie = movies[id]
 

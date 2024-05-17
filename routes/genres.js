@@ -2,13 +2,18 @@ const express = require('express')
 
 const router = express.Router()
 const { generateUniqueId } = require('../utils')
-const { genres } = require('../data')
+const { genres } = require('../data');
+const validate = require('../middelware/validate.js');
 
-router.get('/', (req, res) => {
+router.get('/',
+ (req, res) => {
 	res.json(Object.values(genres))
 })
 
-router.get('/:id', (req, res) => {
+
+
+router.get('/:id', validate.validt,validate.validate,
+(req, res) => {
 	const { id } = req.params
 	const genre = genres[id]
 
@@ -19,7 +24,8 @@ router.get('/:id', (req, res) => {
 	res.json(genre)
 })
 
-router.post('/', (req, res) => {
+router.post('/',validate.validarBody("name"),validate.validate,
+ (req, res) => {
 	const newGenreId = generateUniqueId()
 	const { name } = req.body
 	const newGenre = { id: newGenreId, name }
@@ -27,38 +33,27 @@ router.post('/', (req, res) => {
 	res.status(201).json(newGenre)
 })
 
+
 router.put(
 	'/:id',
-	param('id')
-		.notEmpty()
-		.withMessage('Genre ID is required')
-		.isUUID(4)
-		.withMessage('Invalid Genre ID format'),
-	body('name')
-		.notEmpty()
-		.withMessage('Genre name is required')
-		.isLength({ min: 5 })
-		.withMessage('Genre name must be at least 5 characters long'),
+	validate.validateUUID("id"),validate.validarBody("name")
+	,
+	validate.validate, 
 	(req, res) => {
-		const errors = validationResult(req)
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() })
-		}
+	const { id } = req.params
+    const updatedGenreData = req.body
+    const genre = genres[id]
 
-		const { id } = req.params
-		const updatedGenreData = req.body
-		const genre = genres[id]
+    if (!genre) {
+        return res.status(404).json({ error: 'Genre not found' })
+    }
 
-		if (!genre) {
-			return res.status(404).json({ error: 'Genre not found' })
-		}
+    genres[id] = { ...genre, ...updatedGenreData }
+    res.json(genres[id])
+})
 
-		genres[id] = { ...genre, ...updatedGenreData }
-		res.json(genres[id])
-	}
-)
-
-router.delete('/:id', (req, res) => {
+router.delete('/:id',validate.validt,validate.validate,
+	 (req, res) => {
 	const { id } = req.params
 	const genre = genres[id]
 
